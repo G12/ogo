@@ -1,0 +1,13 @@
+<nav-bar></nav-bar>
+
+<app-google-map *ngIf="geolocation_position"
+    [geolocation_position]="geolocation_position">
+</app-google-map>
+
+<div class="status_container" *ngIf="!geolocation_position">
+    <h1 class="status_msg" >{{status}}</h1>
+    <div *ngIf="watching">
+        <h1 class="status_msg">{{watch_msg}}</h1>
+        <button (click)="continue()">Accept and Continue</button>
+    </div>
+</div>

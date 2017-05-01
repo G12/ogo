@@ -1,0 +1,275 @@
+* {
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.grey_text{
+    color: darkgrey;
+}
+
+.status_box{
+    border: 1px solid black;
+    margin-top: 0px;
+    padding: 1px;
+    text-align: center;
+    display: inline-block;
+    width: 2rem;
+    font-size: 0.5rem;
+    float:right;
+}
+
+.header{
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid lightgrey;
+    cursor: pointer;
+    min-width: 200px;
+    float: none;
+}
+
+.info_text{
+    padding: 0px;
+    display:inline-block;
+    margin: 4px 4px 4px 4px;
+}
+
+.pic_button{
+    padding: 0px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 20%;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    display:inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 2px 2px 2px 2px;
+}
+
+.pic_icon{
+    padding: 0px;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    display:inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 4px 4px 4px 4px;
+}
+
+.bus_button{
+    /* TODO determine correct way to get relative path */
+    background-image: url('https://geopad.ca/ogo/assets/oc_bus_button.png');
+}
+
+.close_button{
+    /* TODO determine correct way to get relative path */
+    background-image: url('https://geopad.ca/ogo/assets/close.jpeg');
+    float: right;
+}
+
+.refresh_button{
+    /* TODO determine correct way to get relative path */
+    background-image: url('https://geopad.ca/ogo/assets/refresh.png');
+}
+
+.down_icon{
+    /* TODO determine correct way to get relative path */
+    background-image: url('https://geopad.ca/ogo/assets/down.png');
+    float: right;
+}
+
+.up_icon{
+    /* TODO determine correct way to get relative path */
+    background-image: url('https://geopad.ca/ogo/assets/up.png');
+    float: right;
+}
+
+
+/* Stop Name and Number */
+
+/* Stop number Grid */
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.container ul:after {
+    content: "";
+    display: block;
+    clear: left;
+}
+
+.container ul li {
+    margin: 0 0 1rem 0;
+    width: calc(25% - 0.75rem);
+    float: left;
+    margin: 0 1rem 1rem 0;
+
+    font-weight: bold;
+    font-size: 0.75rem;
+    text-align: center;
+    border: 1px solid lightgrey;
+
+    cursor: pointer;
+}
+
+.container ul li:nth-child(4n) {
+    margin: 0 0 1rem 0;
+}
+
+/* Bus Arrivals */
+
+.route_label_container{
+    margin-bottom: 10px;
+}
+
+.route_label{
+    display: inline-block;
+}
+
+.trip_card{
+
+    margin: 0px 4px 18px 4px;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+
+    -webkit-box-shadow: 0px 2px 4px 0px rgba(50, 50, 50, 0.31);
+    -moz-box-shadow:    0px 2px 4px 0px rgba(50, 50, 50, 0.31);
+    box-shadow:         0px 2px 4px 0px rgba(50, 50, 50, 0.31);
+
+}
+
+.trips_list{
+    list-style: none;
+    font-size: 0.75rem;
+}
+
+.stop_name{
+    margin-bottom: 1rem;
+}
+
+.stop_name p{
+    font-size: .75rem;
+}
+
+.bus-time{
+    font-size: 0.75rem;
+}
+
+
+/* -- First Break-Point at 600px - TABLET VIEWPORT-- */
+@media screen and (min-width: 600px) and (max-width: 800px) {
+
+    .status_box{
+        margin-top: 3px;
+        width: 4rem;
+        font-size: 1rem;
+    }
+
+
+    .pic_button{
+        width: 48px;
+        height: 48px;
+        margin: 4px 4px 4px 4px;
+    }
+
+    .header{
+        min-width: 320px;
+    }
+
+    .trips_list{
+        font-size: 1rem;
+    }
+
+    /* Stop number Grid */
+    .container {
+        width: 320px;
+    }
+
+    .container ul li {
+        margin: 0 0 1rem 0;
+        width: calc(25% - 0.75rem);
+        float: left;
+        margin: 0 1rem 1rem 0;
+
+        font-weight: bold;
+        font-size: 1.8rem;
+        text-align: center;
+        border: 1px solid lightgrey;
+
+        cursor: pointer;
+    }
+
+    .bus-time{
+        font-size: 1.5rem;
+    }
+
+}
+
+/* -- Second Break-Point at 800px - DESKTOP VIEWPORT-- */
+@media screen and (min-width: 800px) {
+
+    .status_box{
+        margin-top: 3px;
+        width: 4rem;
+        font-size: 1rem;
+    }
+
+    .pic_button{
+        width: 48px;
+        height: 48px;
+        margin: 4px 4px 4px 4px;
+    }
+
+    .header{
+        min-width: 320px;
+    }
+
+    .trips_list{
+        font-size: 1rem;
+    }
+
+    /* Stop number Grid */
+    .container {
+        width: 320px;
+    }
+
+    .container ul li {
+        margin: 0 0 1rem 0;
+        width: calc(25% - 0.75rem);
+        float: left;
+        margin: 0 1rem 1rem 0;
+
+        font-weight: bold;
+        font-size: 1.8rem;
+        text-align: center;
+        border: 1px solid lightgrey;
+
+        cursor: pointer;
+    }
+
+
+    .bus-time{
+        font-size: 1.5rem;
+    }
+
+}

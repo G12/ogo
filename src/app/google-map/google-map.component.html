@@ -1,0 +1,44 @@
+<main>
+
+    <!--
+        <div *ngIf="geolocation_position">
+        <button *ngIf="geolocation_position" (click)="toggleTraking()"
+                [style.background-color]="getTrakColor()">{{trackCaption()}}
+        </button>
+        <button *ngIf="watching" (click)="toggleMovingMap()"
+                [style.background-color]="movingColor()">{{movingCaption()}}
+        </button>
+        <button *ngIf="geolocation_position" (click)="centerMap()">Center</button>
+    </div>
+    -->
+
+    <div [style.height]="container_height + 'px'">
+        <!-- this creates a google map on the page with the given lat/lng from -->
+        <!-- the component as the initial center of the map: -->
+
+        <agm-map *ngIf="geolocation_position" [latitude]="lat" [longitude]="lng"
+                         [zoom]="mapOptions.zoom"
+                         [mapTypeControl]="mapOptions.mapTypeControl"
+                         (centerChange)="centerChanged()"
+                         (boundsChange)="boundsChanged()"
+                         [disableDoubleClickZoom]="true"
+                         (mapDblClick)="onMapDblClick()">
+
+            <moving-map #movingMap
+                        [lattitude]="marker_lat"
+                        [longitude]="marker_lng"
+                        [accuracy]="accuracy"
+                        (mapReady)="mapReady($event)">
+            </moving-map>
+
+            <bus-stops
+                    [lattitude]="marker_lat"
+                    [longitude]="marker_lng"
+                    [accuracy]="accuracy"
+                    [moving_map]="movingMap"
+                    [map]="map">
+            </bus-stops>
+
+        </agm-map>
+    </div>
+</main>

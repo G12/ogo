@@ -2,13 +2,36 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>NgOgo</title>
+  <title>Ogo</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <style>
+    .status_container{
+      height: 600px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+
+      background-image: url('https://geopad.ca/ogo/assets/WatermellonBanner.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .status_msg{
+      color: white;
+    }
+  </style>
 </head>
 <body>
-  <app-root>Loading...</app-root>
+  <app-root>
+    <div class="status_container">
+      <h1 class="status_msg">Loading ...</h1>
+    </div>
+  </app-root>
 </body>
 </html>

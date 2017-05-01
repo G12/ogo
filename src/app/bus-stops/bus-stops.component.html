@@ -1,0 +1,22 @@
+<agm-marker *ngFor="let stop of stops ; let i = index"
+                        (markerClick)="clickedStop(i)"
+                        [latitude]="stop.stop_lat"
+                        [longitude]="stop.stop_lng"
+                        [iconUrl]="bus_stop_gb"
+                        [title]="stop.stop_name"
+                        [markerDraggable]="false">
+
+    <agm-info-window #infoWindow [disableAutoPan]="false"
+                                 [isOpen]="stop.isOpen"
+                                 [zIndex]="1"
+                                 (infoWindowClose)="windowClosed(stop)">
+        <bus-stop-info-window *ngIf="stop.isOpen"
+                              [city_code]="city_code"
+                              [stop]="stop"
+                              [parent]="infoWindow"
+                              [selected_stops]="selected_stops"
+                              [map]="map">
+        </bus-stop-info-window>
+    </agm-info-window>
+
+</agm-marker>

@@ -1,0 +1,14 @@
+agm-map {
+    height: 100%;
+}
+
+span{
+    font-size: 2rem;
+}
+
+button{
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}

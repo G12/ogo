@@ -1,0 +1,98 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+header {
+    font-size: 16px;
+    line-height: 1.6;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.plaid {
+    background-color: #000;
+    background-image: repeating-linear-gradient(90deg, transparent, transparent 25px, rgba(0, 174, 255, 0.25) 25px, rgba(0, 174, 255, 0.25) 28px, transparent 28px, transparent 32px, rgba(0, 174, 255, 0.25) 32px, rgba(0, 174, 255, 0.25) 35px, transparent 35px, transparent 116px, rgba(62, 250, 0, 0.25) 58px, rgba(62, 250, 0, 0.25) 166px), repeating-linear-gradient(0deg, transparent, transparent 25px, rgba(0, 174, 255, 0.25) 25px, rgba(0, 174, 255, 0.25) 28px, transparent 28px, transparent 32px, rgba(0, 174, 255, 0.25) 32px, rgba(0, 174, 255, 0.25) 35px, transparent 35px, transparent 58px, rgba(62, 250, 0, 0.25) 58px, rgba(62, 250, 0, 0.25) 166px), repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(230, 5, 110, 0.25) 2px, rgba(230, 5, 110, 0.25) 4px), repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(230, 5, 204, 0.25) 2px, rgba(230, 5, 204, 0.25) 4px);
+}
+
+nav li a{
+    font-size: 1.4rem;
+    color:white;
+}
+
+.menu-h {
+    width: 100%;
+}
+
+.menu-h li {
+    /* style the list items to remove the bullets
+        and line up horizontally
+        and take up 20% of the width of the ul */
+    float: left;
+    list-style: none;
+    width: 33.33333%;
+}
+
+.menu-h a,
+.menu-h a:link,
+.menu-h a:visited {
+    /* style the anchors to fill the entire width of the li
+            make sure there is padding around your text */
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.1rem;
+}
+
+.menu-h a:hover,
+.menu-h a:active {
+    background-color: #9FB4CC;
+    opacity: 0.7;
+    color:black;
+}
+
+/* -- First Break-Point at 600px - TABLET VIEWPORT-- */
+@media screen and (min-width: 600px) and (max-width: 800px) {
+
+    nav li a{
+        font-size: 1.8rem;
+        color:#003B7F;
+        text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
+        letter-spacing: 0.1rem;
+        font-weight: bold;
+    }
+
+    .menu-h a:hover,
+    .menu-h a:active {
+        background-color: #9FB4CC;
+        color:#003B7F;
+        text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
+        letter-spacing: 0.1rem;
+        font-weight: bold;
+    }
+
+}
+
+/* -- Second Break-Point at 800px - DESKTOP VIEWPORT-- */
+@media screen and (min-width: 800px) {
+
+    nav li a{
+        font-size: 1.8rem;
+        color:#003B7F;
+        text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
+    }
+
+    .menu-h a:hover,
+    .menu-h a:active {
+        background-color: #9FB4CC;
+        color:#003B7F;
+        text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
+    }
+}
