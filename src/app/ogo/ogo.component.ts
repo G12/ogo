@@ -56,6 +56,7 @@ export class OgoComponent implements OnInit {
 
       }, err => {
         console.log(err);
+        this.status = err;
       },
       () => {
         //console.log("DONE DONE DONE");
