@@ -29,4 +29,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Cordova
 
-???? On new install Run `cordova platform add browser`
+On new install cd to cordova folder 
+    1) Run `npm install`
+    2) Run `cordova platform add browser`
+    3) Run `cordova run browser`
+    4) Run `cordova plugin add cordova-plugin-geolocation`
+    5) Run `cordova platform add android`
+    6) Run `cordova run android`

@@ -8,12 +8,15 @@
             "browser"
         ],
         "plugins": {
-            "cordova-plugin-whitelist": {}
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-geolocation": {}
         }
     },
     "dependencies": {
         "cordova-android": "^6.2.3",
-        "cordova-browser": "~4.1.0",
-        "cordova-plugin-whitelist": "1"
+        "cordova-browser": "^4.1.0",
+        "cordova-plugin-compat": "^1.1.0",
+        "cordova-plugin-geolocation": "^2.4.3",
+        "cordova-plugin-whitelist": "^1.3.2"
     }
 }
