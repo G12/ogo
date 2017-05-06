@@ -29,7 +29,7 @@ import {Stop} from '../stop';
 
 export class GoogleMapComponent implements OnInit, AfterViewInit {
 
-  iconBus: String = 'assets/bus_stop_gb18.png';
+  iconBus: String = 'assets/bus_stop_gb14.png';
 
   fake_header_height = 80;
   container_height: number = window.innerHeight - this.fake_header_height;
@@ -161,13 +161,11 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
   }
 
   boundsChanged() {
-    // let zoomLevel: number;
+    // Adjust stop icon to fit zoom level
     if (this.map) {
       console.log('Zoom: ' + this.map.getZoom());
       const zoomLevel: number = this.map.getZoom();
-      if (zoomLevel > 18) {
-        this.iconBus = 'assets/bus_stop_gb18.png';
-      } else if (zoomLevel > 14) {
+      if (zoomLevel > 14) {
         this.iconBus = 'assets/bus_stop_gb14.png';
       } else if (zoomLevel > 13) {
         this.iconBus = 'assets/bus_stop_gb13.png';
