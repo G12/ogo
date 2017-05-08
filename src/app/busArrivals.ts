@@ -47,7 +47,7 @@ export class TripForStop {
   GPSSpeed: string;
   /*Custom*/
   EstimatedArrivalTime: string;
-  DistanceToStop: number;
+  DistanceToStop: number; // if AdjustmentAge is negative then this value contains AdjustmentAge
 }
 
 /*

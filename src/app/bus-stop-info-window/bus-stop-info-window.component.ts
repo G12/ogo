@@ -309,14 +309,25 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
       if (distance < 200) {
         return 'Arrived!';
       }
-      if (this.distanceToStop(tripForStop) < 500) {
+      if (distance < 500) {
+        if (minutes < 0) {
+          return 'Arrived!';
+        }
         return 'Arriving in ' + Utils.toMS(minutes);
       }
     }
     if (minutes < 0) {
-      if (distance) {
+      const adjustmentAge = Number(tripForStop.AdjustmentAge);
+      console.log('adjustmentAge: ' + adjustmentAge);
+      if (adjustmentAge < 0) {
+        // This is a scheduled time so theoretically this should never happen
+        return 'Scheduled ' + Utils.toMS(Math.abs(minutes)) + ' ago!';
+      }
+      if (adjustmentAge < 2) {
+        // Less than 2 indicates good probability of correct estimate
         return 'Arrived ' + Utils.toMS(Math.abs(minutes)) + ' ago!';
       }
+      return 'Arrival: ?????';
     }
     return 'Arrival: ' + Utils.toMS(minutes);
   }
@@ -438,9 +449,9 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
         return;
       }
 
-      console.log('prTime: ' + prTime + ' this.lastProcessingTime: ' + this.lastProcessingTime);
+      // console.log('prTime: ' + prTime + ' this.lastProcessingTime: ' + this.lastProcessingTime);
       this.deltaProcessingTime = prTime - this.lastProcessingTime;
-      console.log('deltaProcessingTime: ' + this.deltaProcessingTime);
+      // console.log('deltaProcessingTime: ' + this.deltaProcessingTime);
       this.lastProcessingTime = prTime;
     }
   }

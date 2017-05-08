@@ -163,7 +163,7 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
   boundsChanged() {
     // Adjust stop icon to fit zoom level
     if (this.map) {
-      console.log('Zoom: ' + this.map.getZoom());
+      // console.log('Zoom: ' + this.map.getZoom());
       const zoomLevel: number = this.map.getZoom();
       if (zoomLevel > 14) {
         this.iconBus = 'assets/bus_stop_gb14.png';
@@ -186,13 +186,13 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
   mapReady(e) {
 
     this.map = e.data.map;
-    console.log('Map Ready, lat() = ' + this.map.getCenter().lat());
+    // console.log('Map Ready, lat() = ' + this.map.getCenter().lat());
 
     this.movingMapComponent.setAccuracyLimit(OgoConstants.STANDARD_ACCURACY_LEVEL);
 
     const stops: Stop[] = this.sharedDataService.getStops();
 
-    console.log('mapReady');
+    // console.log('mapReady');
 
     if (stops && stops.length > 0) {
       // get closest stop
@@ -206,7 +206,7 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
       bounds.extend(stopLatLng);
       this.map.fitBounds(bounds);
 
-      console.log('zoom1: ' + this.map.getZoom());
+      // console.log('zoom1: ' + this.map.getZoom());
 
       const zoom: number = this.map.getZoom();
       if (zoom > OgoConstants.STANDARD_ZOOM_LEVEL) {
@@ -215,7 +215,7 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
 
       this.movingMapComponent.setCircleAttributes(this.accuracy);
 
-      console.log('zoom2: ' + this.map.getZoom());
+      // console.log('zoom2: ' + this.map.getZoom());
 
     }
 
