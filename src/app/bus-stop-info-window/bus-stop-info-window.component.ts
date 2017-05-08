@@ -314,7 +314,9 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
       }
     }
     if (minutes < 0) {
-      return 'Arrived ' + Utils.toMS(Math.abs(minutes)) + ' ago!';
+      if (distance) {
+        return 'Arrived ' + Utils.toMS(Math.abs(minutes)) + ' ago!';
+      }
     }
     return 'Arrival: ' + Utils.toMS(minutes);
   }
@@ -339,10 +341,11 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
       return arrivalSeconds;
     }
 
-    if ((arrivalSeconds < 120 && arrivalSeconds > 0) && (Number(adjustmentAge) > 0.5))// ping every 10 seconds
-    {
+    if ((arrivalSeconds < 120 && arrivalSeconds > 0) && (Number(adjustmentAge) > 0.5)) {
+      // ping every 10 seconds
       return 10;
     }
+
     if (arrivalSeconds > 0 && arrivalSeconds < 120) {
       return 120; // do not update since our estimated time is now more accurate
     }
