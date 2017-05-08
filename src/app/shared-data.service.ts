@@ -17,37 +17,37 @@ export class SharedDataService {
   setStops(stops: Stop[])
   {
     this.stops = stops;
-    console.log("setStops length: " + this.stops.length);
+    console.log('setStops length: ' + this.stops.length);
   }
 
   getStops(){
-    console.log("getStops");
+    console.log('getStops');
     return this.stops;
   }
 
-  addStops(stops:Stop[]){
-    stops.forEach((stop:Stop) => {
+  addStops(stops: Stop[]) {
+    stops.forEach((stop: Stop) => {
       this.stops.push(stop);
-    })
+    });
   }
 
-  setRoutes(routes:Route[]){
+  setRoutes(routes: Route[]) {
     this.routes = routes;
   }
 
-  addRoutes(routes:Route[]){
-    routes.forEach((route:Route) =>{
+  addRoutes(routes: Route[]) {
+    routes.forEach((route: Route) => {
 
       this.routes.push(route);
 
-    })
+    });
   }
 
-  getRoutes(){
+  getRoutes() {
     return this.routes;
   }
 
-  getCityCode() :string{
+  getCityCode(): string {
     return OgoConstants.OC_TRANSPO;
   }
 

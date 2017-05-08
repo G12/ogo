@@ -180,7 +180,7 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
   }
 
   onMapDblClick() {
-    alert('You Double Clicked');
+    // alert('You Double Clicked');
   }
 
   mapReady(e) {
@@ -220,9 +220,9 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
     }
 
     // dblclick
-    google.maps.event.addListener(this.map, 'dblclick', (e) => {
+    google.maps.event.addListener(this.map, 'dblclick', (err) => {
 
-      this.performDblClick(e.latLng);
+      this.performDblClick(err.latLng);
 
     });
 
@@ -271,7 +271,7 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
       this.sharedDataService.addStops(temp);
 
       this.map.panTo(latLng);
-      this.map.setZoom(OgoConstants.STANDARD_ZOOM_LEVEL);
+      this.map.setZoom(OgoConstants.DBLCLICK_ZOOM_LEVEL);
 
     });
 
