@@ -1,142 +1,144 @@
-<div *ngIf="(routes && !busArrivals)">
+<div #container (click)="bringForward()">
+    <div *ngIf="(routes && !busArrivals)">
 
-    <div class="header clearfix">
+        <div class="header clearfix">
         <span *ngIf="isActive()"
               title="Show information for selected buses"
               class="pic_button bus_button" (click)="monitorBuses(false)"></span>
-        <span *ngIf="!isActive()" class="info_text">Select Bus Numbers</span>
-        <!--
-        <span title="Close"
-              class="pic_button close_button" (click)="closeInfoWindow()"></span>
-        -->
-    </div>
-
-    <main (click)="sendBack()">
-        <div class="stop_name">
-            <h4>{{stop.stop_name}}</h4>
-            <p>Stop number: {{stop.stop_code}}</p>
-        </div>
-
-
-        <!-- Stop Number Grid -->
-        <div class="container">
-            <ul>
-                <li *ngFor="let route of routes ; let i = index"
-                    (click)="selectBus(i)"
-                    [style.background-color]="getStyle(i)"
-                    title="Click to select or deselect this bus.">
-                    {{route.route_number}}
-                </li>
-            </ul>
-        </div>
-    </main>
-</div>
-
-<div *ngIf="busArrivals">
-    <div *ngFor="let busArrival of busArrivals">
-
-        <div class="header">
-            <span title="Go back to Bus Number Menu"
-                  class="pic_button bus_button" (click)="showBuses()"></span>
-            <span title="Update Bus Information"
-                  class="pic_button refresh_button" (click)="monitorBuses(true)"></span>
+            <span *ngIf="!isActive()" class="info_text">Select Bus Numbers</span>
             <!--
             <span title="Close"
                   class="pic_button close_button" (click)="closeInfoWindow()"></span>
             -->
-            <span *ngIf="!expandToggle"
-                  title="Show information for all buses"
-                  class="pic_button down_icon" (click)="toggleExpand()"></span>
-            <span *ngIf="expandToggle"
-                  title="Show information for first bus only"
-                  class="pic_button up_icon" (click)="toggleExpand()"></span>
         </div>
 
         <main (click)="sendBack()">
             <div class="stop_name">
-                <h4>{{stop.stop_name}}</h4>
-                <p>Stop number: {{busArrival.stop_no}}</p>
-                <!--<p>Window Width:{{windowWidth}} zIndex: {{parent.zIndex}} zoom: {{map.getZoom()}}</p>-->
+                <h4>{{stop.stop_name}} Z={{stop.zIndex}}</h4>
+                <p>Stop number: {{stop.stop_code}}</p>
             </div>
 
-            <h2 *ngIf="busy">Getting Bus Data ...</h2>
-            <div *ngIf="!busy">
-                <div class="trip_card" *ngFor="let route of busArrival.routes">
-                    <!--<h3>Route: {{route.route_no}}</h3>-->
-                    <h3 *ngIf="route.trips.length == 0">No trips available at this time.</h3>
-                    <div *ngFor="let trip of route.trips">
-                        <div class="route_label_container clearfix">
-                            <div class="route_label">
-                                <h4>{{route.route_no}} {{trip.RouteLabel}} {{trip.Direction}}</h4>
-                                <p *ngIf="trip.tripsForStop.length == 0">No buses scheduled at this time.</p>
+
+            <!-- Stop Number Grid -->
+            <div class="container">
+                <ul>
+                    <li *ngFor="let route of routes ; let i = index"
+                        (click)="selectBus(i)"
+                        [style.background-color]="getStyle(i)"
+                        title="Click to select or deselect this bus.">
+                        {{route.route_number}}
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <div *ngIf="busArrivals">
+        <div *ngFor="let busArrival of busArrivals">
+
+            <div class="header">
+            <span title="Go back to Bus Number Menu"
+                  class="pic_button bus_button" (click)="showBuses()"></span>
+                <span title="Update Bus Information"
+                      class="pic_button refresh_button" (click)="monitorBuses(true)"></span>
+                <!--
+                <span title="Close"
+                      class="pic_button close_button" (click)="closeInfoWindow()"></span>
+                -->
+                <span *ngIf="!expandToggle"
+                      title="Show information for all buses"
+                      class="pic_button up_icon" (click)="toggleExpand()"></span>
+                <span *ngIf="expandToggle"
+                      title="Show information for first bus only"
+                      class="pic_button down_icon" (click)="toggleExpand()"></span>
+            </div>
+
+            <main (click)="sendBack()">
+                <div class="stop_name">
+                    <h4>{{stop.stop_name}} Z={{stop.zIndex}}</h4>
+                    <p>Stop number: {{busArrival.stop_no}}</p>
+                    <!--<p>Window Width:{{windowWidth}} zIndex: {{parent.zIndex}} zoom: {{map.getZoom()}}</p>-->
+                </div>
+
+                <h2 *ngIf="busy">Getting Bus Data ...</h2>
+                <div *ngIf="!busy">
+                    <div class="trip_card" *ngFor="let route of busArrival.routes">
+                        <!--<h3>Route: {{route.route_no}}</h3>-->
+                        <h3 *ngIf="route.trips.length == 0">No trips available at this time.</h3>
+                        <div *ngFor="let trip of route.trips">
+                            <div class="route_label_container clearfix">
+                                <div class="route_label">
+                                    <h4>{{route.route_no}} {{trip.RouteLabel}} {{trip.Direction}}</h4>
+                                    <p *ngIf="trip.tripsForStop.length == 0">No buses scheduled at this time.</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <ul class="trips_list" *ngFor="let tripForStop of trip.tripsForStop">
+                            <ul class="trips_list" *ngFor="let tripForStop of trip.tripsForStop">
 
-                            <div *ngIf="expandToggle || tripForStop.BusIndex == 0">
+                                <div *ngIf="expandToggle || tripForStop.BusIndex == 0">
 
-                                <!--
-                                <li *ngIf="tripForStop.BusIndex == 0" class="grey_text">
-                                    <strong>{{countdown(tripForStop)}}</strong>
-                                </li>
-                                -->
-                                <li>
+                                    <!--
+                                    <li *ngIf="tripForStop.BusIndex == 0" class="grey_text">
+                                        <strong>{{countdown(tripForStop)}}</strong>
+                                    </li>
+                                    -->
+                                    <li>
                                     <span class="bus-time">
                                         <strong>{{timeLeft(tripForStop)}}</strong>
                                     </span>
-                                    <span class="status_box"
-                                          [style.background-color]="getConfidenceColor(tripForStop.AdjustmentAge)">
+                                        <span class="status_box"
+                                              [style.background-color]="getConfidenceColor(tripForStop.AdjustmentAge)">
                                         {{getConfidenceText(tripForStop.AdjustmentAge)}}
                                     </span>
-                                </li>
+                                    </li>
 
-                                <li>At: <strong>{{tripForStop.EstimatedArrivalTime}}</strong>
-                                    <span *ngIf="tripForStop.DistanceToStop > 0">
+                                    <li>At: <strong>{{tripForStop.EstimatedArrivalTime}}</strong>
+                                        <span *ngIf="tripForStop.DistanceToStop > 0">
                                         &nbsp;&nbsp;Dist.: {{toPrecission(tripForStop.DistanceToStop/1000,1)}} km
                                     </span>
-                                </li>
-                                <!--
-                                <li>TripStartTime: {{tripForStop.TripStartTime}}</li>
-                                -->
+                                    </li>
+                                    <!--
+                                    <li>TripStartTime: {{tripForStop.TripStartTime}}</li>
+                                    -->
 
-                                <!--
-                                <li>AdjustmentAge: {{toMS(tripForStop.AdjustmentAge)}}</li>
-                                -->
+                                    <!--
+                                    <li>AdjustmentAge: {{toMS(tripForStop.AdjustmentAge)}}</li>
+                                    -->
 
-                                <!--
-                                <li>DeltaProcessingTime: {{deltaProcessingTime}}</li>
-                                <li>TripDestination: {{tripForStop.TripDestination}}</li>
-                                -->
+                                    <!--
+                                    <li>DeltaProcessingTime: {{deltaProcessingTime}}</li>
+                                    <li>TripDestination: {{tripForStop.TripDestination}}</li>
+                                    -->
 
-                                <!--
-                                <li>RequestProcessingTime: {{tripForStop.RequestProcessingTime}}</li>
-                                <li>BusIndex: {{tripForStop.BusIndex}}</li>
-                                <li>LastTripOfSchedule: {{tripForStop.LastTripOfSchedule}}</li>
-                                <li>BusType: {{tripForStop.BusType}}</li>
-                                <li>Latitude: {{tripForStop.Latitude}}</li>
-                                <li>Longitude: {{tripForStop.Longitude}}</li>
-                                <li>GPSSpeed: {{tripForStop.GPSSpeed}}</li>
-                                -->
+                                    <!--
+                                    <li>RequestProcessingTime: {{tripForStop.RequestProcessingTime}}</li>
+                                    <li>BusIndex: {{tripForStop.BusIndex}}</li>
+                                    <li>LastTripOfSchedule: {{tripForStop.LastTripOfSchedule}}</li>
+                                    <li>BusType: {{tripForStop.BusType}}</li>
+                                    <li>Latitude: {{tripForStop.Latitude}}</li>
+                                    <li>Longitude: {{tripForStop.Longitude}}</li>
+                                    <li>GPSSpeed: {{tripForStop.GPSSpeed}}</li>
+                                    -->
 
-                                <!--
-                                <li>stop_no: {{tripForStop.stop_no}}</li>
-                                <li>stop_name: {{tripForStop.stop_name}}</li>
-                                <li>stop_id: {{tripForStop.stop_id}}</li>
-                                <li>stop_code: {{tripForStop.stop_code}}</li>
-                                <li>stop_lat: {{tripForStop.stop_lat}}</li>
-                                <li>stop_lng: {{tripForStop.stop_lng}}</li>
-                                <li>StopLabel: {{tripForStop.StopLabel}}</li>
-                                <li>StopNo: {{tripForStop.StopNo}}</li>
-                                <li>Direction: {{tripForStop.Direction}}</li>
-                                <li>RouteLabel: {{tripForStop.RouteLabel}}</li>
-                                <li>RouteNo: {{tripForStop.RouteNo}}</li>
-                                -->
-                            </div>
-                        </ul>
+                                    <!--
+                                    <li>stop_no: {{tripForStop.stop_no}}</li>
+                                    <li>stop_name: {{tripForStop.stop_name}}</li>
+                                    <li>stop_id: {{tripForStop.stop_id}}</li>
+                                    <li>stop_code: {{tripForStop.stop_code}}</li>
+                                    <li>stop_lat: {{tripForStop.stop_lat}}</li>
+                                    <li>stop_lng: {{tripForStop.stop_lng}}</li>
+                                    <li>StopLabel: {{tripForStop.StopLabel}}</li>
+                                    <li>StopNo: {{tripForStop.StopNo}}</li>
+                                    <li>Direction: {{tripForStop.Direction}}</li>
+                                    <li>RouteLabel: {{tripForStop.RouteLabel}}</li>
+                                    <li>RouteNo: {{tripForStop.RouteNo}}</li>
+                                    -->
+                                </div>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
 </div>

@@ -1,10 +1,14 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
+/***
+ *  Infow Window content
+ */
+
+import {Component, OnInit, Input, OnDestroy, AfterViewChecked, ViewChild, ElementRef} from '@angular/core';
 
 import {AgmInfoWindow, AgmMarker, InfoWindowManager} from '@agm/core';
 
 import {TimerService} from '../timer.service';
 import {KeyedCollection} from '../keyed-collection';
-import {Utils} from '../utils';
+import {InfoBox, Utils} from '../utils';
 
 /////////////////////   Bus Routes  /////////////////
 import {TransitService} from '../transit.service';
@@ -15,7 +19,10 @@ import {BusArrivals, BusRoute, Trip, TripForStop} from '../busArrivals';
 
 import {} from '@types/googlemaps';
 
-import { OgoConstants } from '../ogo-constants';
+import {OgoConstants} from '../ogo-constants';
+
+import {SharedDataService} from '../shared-data.service';
+import {isNumber} from 'util';
 
 @Component({
   selector: 'bus-stop-info-window',
@@ -23,7 +30,9 @@ import { OgoConstants } from '../ogo-constants';
   styleUrls: ['./bus-stop-info-window.component.css']
 })
 
-export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
+export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewChecked {
+
+  @ViewChild('container') elementView: ElementRef;
 
   @Input() city_code: string;
   @Input() stop: Stop;
@@ -32,8 +41,8 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
   @Input() bus_stop_gb: string;
   @Input() selected_stops: KeyedCollection<Stop>;
   @Input() map: google.maps.Map;
-
-  zIndex: number = -1;
+  @Input() latitude: number;
+  @Input() longitude: number;
 
   routes: Route[]; // {"route_number":"86","trip_headsign":"86_Baseline  Colonnade","headsign_id":"369"}
   busArrivals: BusArrivals[];
@@ -53,11 +62,24 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
 
   windowWidth: number;
 
+
+  autoScrollDone = false;
+
   constructor(private transitService: TransitService,
+              private sharedDataService: SharedDataService,
               private timerService: TimerService,
               private infoWindowManager: InfoWindowManager) {
 
   }
+
+  ngAfterViewChecked() {
+
+    // Get Height and width of infoWindow
+    this.stop.height = this.elementView.nativeElement.offsetHeight;
+    this.stop.width = this.elementView.nativeElement.offsetWidth;
+
+  }
+
 
   ngOnDestroy(): void {
     if (this.timerService.unsubscribe(this.timerId)) {
@@ -94,6 +116,13 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
           this.routes[0].selected = true;
           this.monitorBuses(false);
         }
+
+        // Make sure window is at the top
+        this.parent.zIndex = this.sharedDataService.getNextZindex();
+        this.infoWindowManager.setZIndex(this.parent);
+        this.stop.zIndex = this.parent.zIndex;
+
+        console.log('Open with zIndex:' + this.stop.zIndex);
 
         // This kicks off Autoscroll after data has loaded
         this.infoWindowManager.open(this.parent);
@@ -156,8 +185,11 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
 
       this.makeDeltaProcesingTime();
 
-      // This kicks off Autoscroll after data has loaded
-      this.infoWindowManager.open(this.parent);
+      if (!this.autoScrollDone) {
+        // This kicks off Autoscroll (for the last time) after data has loaded
+        this.infoWindowManager.open(this.parent);
+        this.autoScrollDone = true;
+      }
 
     });
 
@@ -207,7 +239,9 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
   }
 
   getConfidenceText(adjustmentAge: number) {
-    if (adjustmentAge < 0) { return 'Sched.'; }
+    if (adjustmentAge < 0) {
+      return 'Sched.';
+    }
     let text = 'Stale';
     if (adjustmentAge < 0.5) {
       text = 'Good';
@@ -220,7 +254,9 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
 
   getConfidenceColor(adjustmentAge: number) {
 
-    if (adjustmentAge < 0) { return 'lightgrey'; }
+    if (adjustmentAge < 0) {
+      return 'lightgrey';
+    }
 
     const elapsed = Number(adjustmentAge) + this.counter / 60;
 
@@ -233,9 +269,53 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
     return color;
   }
 
+  bringForward() {
+
+    const stopA: number[] = Utils.latLngToPixelCoords(this.latitude, this.longitude, this.map);
+    const rectA = new InfoBox();
+    rectA.position = stopA;
+    rectA.width = this.stop.width;
+    rectA.height = this.stop.height;
+
+    let overlapFlag = false;
+    let maxZ = 1;
+    // Loop through open stops to find overlaps
+    const stopsArray: Stop[] = this.selected_stops.Values();
+    stopsArray.forEach(stop => {
+      if (this.stop.stop_id !== stop.stop_id) {
+
+        const stopB: number[] = Utils.latLngToPixelCoords(stop.stop_lat, stop.stop_lng, this.map);
+        const rectB = new InfoBox();
+        rectB.position = stopB;
+        rectB.height = stop.height;
+        rectB.width = stop.width;
+
+        if (Utils.overlaps(rectA, rectB, this.map)) {
+          overlapFlag = true;
+          if (stop.zIndex > maxZ) {
+            maxZ = stop.zIndex
+          }
+          console.log('Stop: ' + this.stop.stop_name + ' overlaps with ' + stop.stop_name);
+        }
+
+      }
+    });
+
+    if (overlapFlag) {
+      if (this.stop.zIndex < maxZ) {
+
+        this.parent.zIndex = this.sharedDataService.getNextZindex();
+        this.infoWindowManager.setZIndex(this.parent);
+        this.stop.zIndex = this.parent.zIndex;
+        console.log('Current zIndex: ' + this.sharedDataService.getCurrentZindex());
+
+      }
+
+    }
+
+  }
+
   sendBack() {
-    this.parent.zIndex = this.zIndex--;
-    this.infoWindowManager.setZIndex(this.parent);
   }
 
   showBuses() {
@@ -318,7 +398,7 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
     }
     if (minutes < 0) {
       const adjustmentAge = Number(tripForStop.AdjustmentAge);
-      console.log('adjustmentAge: ' + adjustmentAge);
+      // console.log('adjustmentAge: ' + adjustmentAge);
       if (adjustmentAge < 0) {
         // This is a scheduled time so theoretically this should never happen
         return 'Scheduled ' + Utils.toMS(Math.abs(minutes)) + ' ago!';
@@ -369,7 +449,7 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
     return 120 - adjustmentAgeSeconds;
   }
 
-  private distanceToStop(tripForStop: TripForStop){
+  private distanceToStop(tripForStop: TripForStop) {
     if (Number(tripForStop.AdjustmentAge) < 0) {
       return Number(tripForStop.AdjustmentAge);
     }
@@ -401,8 +481,8 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
                 // if time is less than 2 minutes
                 const distance: number = tripForStop.DistanceToStop;
                 if (
-                      this.counter > this.timeLimit(Number(tripForStop.AdjustmentAge), Number(tripForStop.AdjustedScheduleTime))
-                      || ((distance > 0 && distance < 100) && this.counter > 10)) {
+                  this.counter > this.timeLimit(Number(tripForStop.AdjustmentAge), Number(tripForStop.AdjustedScheduleTime))
+                  || ((distance > 0 && distance < 100) && this.counter > 10)) {
                   this.monitorBuses(false);
                 }
               }
@@ -414,7 +494,7 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
     }
   }
 
-  makeCalculatedFields(){
+  makeCalculatedFields() {
     if (this.busArrivals) {
       this.busArrivals.forEach(busArrival => {
         busArrival.routes.forEach(route => {
@@ -429,7 +509,7 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy {
     }
   }
 
-  makeEstimatedArrivalTime(tripForStop: TripForStop){
+  makeEstimatedArrivalTime(tripForStop: TripForStop) {
     const now = new Date();
     const arrival = new Date(now.getTime() + Number(tripForStop.AdjustedScheduleTime) * 60000);
     // return arrival.toLocaleTimeString();

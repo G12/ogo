@@ -257,7 +257,10 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
           stop_lat: Number(lat),
           stop_lng: Number(lng),
           isOpen: false, // Set all info windows closed
-          distance: dist
+          distance: dist,
+          zIndex: 1,
+          height: 0,
+          width: 0
         });
 
       });

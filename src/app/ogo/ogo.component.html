@@ -10,4 +10,9 @@
         <h1 class="status_msg">{{watch_msg}}</h1>
         <button (click)="continue()">Accept and Continue</button>
     </div>
+    <div *ngIf="noLocation">
+        <button (click)="useDefault()">Use Default Location</button>
+    </div>
+    <h2 class="status_msg" >{{lastDate}}</h2>
+
 </div>

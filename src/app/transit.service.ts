@@ -28,6 +28,18 @@ export class TransitService {
     return Promise.reject(error.message || error);
   }
 
+
+  getLastDate(city_code): Promise<string> {
+
+    let getLastDateURL: string;
+    getLastDateURL = this.stopsURL + '?op_id=lastDate&city_code=' + city_code
+
+    return this.http.get(getLastDateURL)
+      .toPromise()
+      .then(response => response.json().lastDate as string)
+      .catch(this.handleError);
+  }
+
   // '?lat_low=45.3985574&lat_high=45.4185574&lon_low=-75.66252039999997&lon_high=-75.65252039999996&city_code=oc';     // URL to web api
 
   getStops(lat: number, lng: number, city_code: string): Promise<Stop[]> {

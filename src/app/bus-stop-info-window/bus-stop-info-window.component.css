@@ -30,7 +30,7 @@
     margin-bottom: 1rem;
     border: 1px solid lightgrey;
     cursor: pointer;
-    min-width: 200px;
+    min-width: 190px;
     float: none;
 }
 
@@ -68,30 +68,21 @@
 }
 
 .bus_button{
-    /* TODO determine correct way to get relative path */
-    background-image: url('https://geopad.ca/ogo/assets/oc_bus_button.png');
-}
+    background-image: url('../../assets/oc_bus_button.png');
 
-.close_button{
-    /* TODO determine correct way to get relative path */
-    background-image: url('https://geopad.ca/ogo/assets/close.jpeg');
-    float: right;
 }
 
 .refresh_button{
-    /* TODO determine correct way to get relative path */
-    background-image: url('https://geopad.ca/ogo/assets/refresh.png');
+    background-image: url('../../assets/refresh.png');
 }
 
 .down_icon{
-    /* TODO determine correct way to get relative path */
-    background-image: url('https://geopad.ca/ogo/assets/down.png');
+    background-image: url('../../assets/down.png');
     float: right;
 }
 
 .up_icon{
-    /* TODO determine correct way to get relative path */
-    background-image: url('https://geopad.ca/ogo/assets/up.png');
+    background-image: url('../../assets/up.png');
     float: right;
 }
 

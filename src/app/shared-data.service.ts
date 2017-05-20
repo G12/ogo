@@ -10,7 +10,7 @@ export class SharedDataService {
 
   stops: Stop[];
   routes: Route[];
-
+  currentZindex = 1;
 
   constructor() { }
 
@@ -49,6 +49,18 @@ export class SharedDataService {
 
   getCityCode(): string {
     return OgoConstants.OC_TRANSPO;
+  }
+
+  getCurrentZindex(): number {
+    return this.currentZindex;
+  }
+
+  setCurrentZindex(index: number) {
+    this.currentZindex = index;
+  }
+
+  getNextZindex(): number {
+    return ++this.currentZindex;
   }
 
 }

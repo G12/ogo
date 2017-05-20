@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+.status_container{
+    height: 600px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-image: url('WatermellonBanner.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.status_msg{
+    color: white;
+}

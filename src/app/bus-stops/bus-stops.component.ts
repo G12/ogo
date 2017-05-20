@@ -60,7 +60,6 @@ export class BusStopsComponent implements OnInit {
     this.stops = this.sharedDataService.getStops();
 
   }
-
   // Called before new info window is opened
   clickedStop(i) {
 

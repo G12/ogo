@@ -6,4 +6,7 @@ export class Stop {
   stop_lng: number;
   isOpen: boolean;
   distance: number;
+  zIndex: number;
+  height: number;
+  width: number;
 }
