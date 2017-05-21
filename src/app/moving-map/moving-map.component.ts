@@ -9,7 +9,7 @@ import {OgoConstants} from '../ogo-constants';
 import {} from '@types/googlemaps';
 
 @Component({
-  selector: 'moving-map',
+  selector: 'app-moving-map',
   template: ''
 })
 

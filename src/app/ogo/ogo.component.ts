@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 
+import {MdDialog, MdDialogRef} from '@angular/material';
+import {ConfirmDlgComponent} from '../confirm-dlg/confirm-dlg.component';
+
 import {GeolocationService} from '../geolocation.service';
 import {Position} from '../geolocation-api';
 import {SharedDataService} from '../shared-data.service';
@@ -12,13 +15,14 @@ import {Utils} from '../utils';
 
 
 @Component({
-  selector: 'ogo',
+  selector: 'app-ogo',
   templateUrl: './ogo.component.html',
   styleUrls: ['./ogo.component.css']
 })
 
 export class OgoComponent implements OnInit {
 
+  selectedOption: string;
   geolocation_position: Position;
   watch_subscription: Subscription;
   watch_position: Position;
@@ -31,7 +35,8 @@ export class OgoComponent implements OnInit {
 
   constructor(private geolocationService: GeolocationService,
               private sharedDataService: SharedDataService,
-              private transitService: TransitService) {
+              private transitService: TransitService,
+              public dialog: MdDialog) {
   }
 
   ngOnInit() {
@@ -72,6 +77,13 @@ export class OgoComponent implements OnInit {
         // console.log("DONE DONE DONE");
       }
     );
+  }
+
+  openConfirmDlg() {
+    const dialogRef = this.dialog.open(ConfirmDlgComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      this.selectedOption = result;
+    });
   }
 
   watchForBetterPosition(limit: number) {

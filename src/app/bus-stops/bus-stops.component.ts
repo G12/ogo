@@ -14,7 +14,7 @@ import {OgoConstants} from '../ogo-constants';
 import {} from '@types/googlemaps';
 
 @Component({
-  selector: 'bus-stops',
+  selector: 'app-bus-stops',
   templateUrl: './bus-stops.component.html',
   styleUrls: ['./bus-stops.component.css']
 })

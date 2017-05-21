@@ -10,7 +10,7 @@
                      [isOpen]="stop.isOpen"
                      [zIndex]="1"
                      (infoWindowClose)="windowClosed(stop)">
-        <bus-stop-info-window *ngIf="stop.isOpen"
+        <app-bus-stop-info-window *ngIf="stop.isOpen"
                               [city_code]="city_code"
                               [stop]="stop"
                               [parent]="infoWindow"
@@ -19,6 +19,6 @@
                               [marker]="agmMarker"
                               [latitude]="stop.stop_lat"
                               [longitude]="stop.stop_lng">
-        </bus-stop-info-window>
+        </app-bus-stop-info-window>
     </agm-info-window>
 </agm-marker>

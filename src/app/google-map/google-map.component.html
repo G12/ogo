@@ -24,21 +24,21 @@
                          [disableDoubleClickZoom]="true"
                          (mapDblClick)="onMapDblClick()">
 
-            <moving-map #movingMap
+            <app-moving-map #movingMap
                         [lattitude]="marker_lat"
                         [longitude]="marker_lng"
                         [accuracy]="accuracy"
                         (mapReady)="mapReady($event)">
-            </moving-map>
+            </app-moving-map>
 
-            <bus-stops
+            <app-bus-stops
                     [lattitude]="marker_lat"
                     [longitude]="marker_lng"
                     [accuracy]="accuracy"
                     [moving_map]="movingMap"
                     [map]="map"
                     [iconUrl]="iconBus">
-            </bus-stops>
+            </app-bus-stops>
 
         </agm-map>
     </div>

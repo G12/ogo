@@ -25,7 +25,7 @@ import {SharedDataService} from '../shared-data.service';
 import {isNumber} from 'util';
 
 @Component({
-  selector: 'bus-stop-info-window',
+  selector: 'app-bus-stop-info-window',
   templateUrl: './bus-stop-info-window.component.html',
   styleUrls: ['./bus-stop-info-window.component.css']
 })

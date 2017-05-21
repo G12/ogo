@@ -1,10 +1,15 @@
-<nav-bar></nav-bar>
+<app-nav-bar></app-nav-bar>
+
+<button md-button (click)="openConfirmDlg()">Click me!</button>
+<h1>{{selectedOption}}</h1>
 
 <app-google-map *ngIf="geolocation_position"
     [geolocation_position]="geolocation_position">
 </app-google-map>
 
 <div class="status_container" *ngIf="!geolocation_position">
+
+
     <h1 class="status_msg" >{{status}}</h1>
     <div *ngIf="watching">
         <h1 class="status_msg">{{watch_msg}}</h1>
