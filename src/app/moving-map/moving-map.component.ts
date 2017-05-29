@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {GoogleMapsAPIWrapper} from '@agm/core';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 
 import {GeolocationService} from '../geolocation.service';
 
@@ -163,8 +163,7 @@ export class MovingMapComponent implements OnInit {
     return accuracy;
   }
 
-  setCircleAttributes(accuracy: number)
-  {
+  setCircleAttributes(accuracy: number) {
     this.circle.setRadius(this.adjustAccuracy(accuracy));
     // this.circle.strokeColor = OgoConstants.GOOD_GREEN; //TODO does not work - investigate solution
     this.circle.setOptions({strokeColor: OgoConstants.GOOD_GREEN});

@@ -460,13 +460,15 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewC
   }
 
   /**
-   * called once every 10 seconds
+   * called once every 10 seconds - deprecated
+   * TODO do not auto-update if number of buses being monitored is larger than 3
    */
   private autoUpdate(counter: number) {
 
     if (this.busArrivals) {
       // if (counter % 10 == 0) {
       this.busArrivals.forEach(busArrival => {
+        const count = busArrival.routes.length;
         busArrival.routes.forEach(route => {
           route.trips.forEach(trip => {
             trip.tripsForStop.forEach(tripForStop => {
@@ -475,7 +477,9 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewC
                 // Handle case for scheduled bus arrivals
                 if (Number(tripForStop.AdjustmentAge) < 0) {
                   if (Number(tripForStop.AdjustedScheduleTime) * 60 - this.counter === 0) {
-                    this.monitorBuses(false);
+                    if (count < 4) {
+                      this.monitorBuses(false);
+                    }
                   }
                 }
                 // if time is less than 2 minutes
@@ -483,7 +487,9 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewC
                 if (
                   this.counter > this.timeLimit(Number(tripForStop.AdjustmentAge), Number(tripForStop.AdjustedScheduleTime))
                   || ((distance > 0 && distance < 100) && this.counter > 10)) {
-                  this.monitorBuses(false);
+                  if (count < 4) {
+                    this.monitorBuses(false);
+                  }
                 }
               }
             });

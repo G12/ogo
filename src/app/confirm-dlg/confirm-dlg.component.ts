@@ -8,6 +8,9 @@ import { MdDialogRef } from '@angular/material';
 })
 export class ConfirmDlgComponent {
 
+  title: string;
+  message: string;
+
   constructor(public dialogRef: MdDialogRef <ConfirmDlgComponent>) { }
 
 }

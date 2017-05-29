@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -12,6 +12,7 @@ import {TimerService} from './timer.service';
 import { GeolocationService } from './geolocation.service';
 import {TransitService} from './transit.service';
 import {SharedDataService} from './shared-data.service';
+import {DialogService} from './dialog.service';
 
 
 import { AppComponent } from './app.component';
@@ -43,10 +44,11 @@ import { ConfirmDlgComponent } from './confirm-dlg/confirm-dlg.component';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA1InXxmyZWGfqX28lKs_FFlLziBNSGE0s',
-      libraries: ['geometry']
+      libraries: ['geometry', 'places']
     }),
     BrowserAnimationsModule,
     MdButtonModule,
@@ -55,7 +57,7 @@ import { ConfirmDlgComponent } from './confirm-dlg/confirm-dlg.component';
   entryComponents: [
     ConfirmDlgComponent
   ],
-  providers: [GeolocationService, GoogleMapsAPIWrapper, TransitService, TimerService, InfoWindowManager, SharedDataService],
+  providers: [GeolocationService, GoogleMapsAPIWrapper, TransitService, TimerService, InfoWindowManager, SharedDataService, DialogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -64,7 +64,7 @@
                 <div *ngIf="!busy">
                     <div class="trip_card" *ngFor="let route of busArrival.routes">
                         <!--<h3>Route: {{route.route_no}}</h3>-->
-                        <h3 *ngIf="route.trips.length == 0">No trips available at this time.</h3>
+                        <h3 *ngIf="route.trips.length == 0">{{route.route_no}} No trip data available.</h3>
                         <div *ngFor="let trip of route.trips">
                             <div class="route_label_container clearfix">
                                 <div class="route_label">
