@@ -6,7 +6,7 @@
 
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Position} from './geolocation-api'
+import {Position} from './geolocation-api';
 
 const GEOLOCATION_ERRORS = {
   'errors.location.unsupportedBrowser': 'Browser does not support location services',
@@ -20,7 +20,7 @@ export class GeolocationService {
 
   watchId: any;
 
-  //constructor() { }
+  // constructor() { }
 
   public getLocation(opts): Observable<Position> {
     return Observable.create(observer => {
@@ -34,8 +34,7 @@ export class GeolocationService {
             this.handleError(observer, error);
           },
           opts);
-      }
-      else {
+      } else {
         observer.error(GEOLOCATION_ERRORS['errors.location.unsupportedBrowser']);
       }
     });
@@ -52,15 +51,13 @@ export class GeolocationService {
             this.handleError(observer, error);
           },
           opts);
-      }
-      else {
+      } else {
         observer.error(GEOLOCATION_ERRORS['errors.location.unsupportedBrowser']);
       }
     });
   }
 
-  handleError(observer, error)
-  {
+  handleError(observer, error) {
     switch (error.code) {
       case 1:
         observer.error(GEOLOCATION_ERRORS['errors.location.permissionDenied']);
@@ -74,8 +71,7 @@ export class GeolocationService {
     }
   }
 
-  clearWatch()
-  {
+  clearWatch() {
     navigator.geolocation.clearWatch(this.watchId);
   }
 

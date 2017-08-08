@@ -28,6 +28,17 @@ export class TransitService {
     return Promise.reject(error.message || error);
   }
 
+  // Test service for posting geolocation - See survey app
+  storeTestLocation(lat, lng, accuracy, time): Promise<string> {
+
+    let storeTestLocationURL: string;
+    storeTestLocationURL = this.stopsURL + '?op_id=location_test&lat=' + lat + '&lng=' + lng + '&accuracy=' + accuracy + '&time=' + time;
+
+    return this.http.get(storeTestLocationURL)
+      .toPromise()
+      .then(response => response.json().status as string)
+      .catch(this.handleError);
+  }
 
   getLastDate(city_code): Promise<string> {
 

@@ -252,6 +252,14 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewC
     return Utils.toMS(elapsed);
   }
 
+  getToggleText(isOpen: boolean) {
+    if (isOpen) {
+      return 'less...';
+    } else {
+      return 'more...';
+    }
+  }
+
   getConfidenceColor(adjustmentAge: number) {
 
     if (adjustmentAge < 0) {
@@ -547,6 +555,14 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewC
     const snd = new Audio(OgoConstants.BEEP_WAVE);
     snd.play();
 
+  }
+
+  bikeStatus(busType: string) {
+    if (busType.indexOf('B') >= 0) {
+      return 'bike';
+    } else {
+      return '';
+    }
   }
 }
 

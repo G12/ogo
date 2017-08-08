@@ -1,6 +1,10 @@
 /platforms
 /plugins
-/www
+
+#make sure to keep www directory ( needed for cordova run etc. )
+www/*
+!www/.gitkeep
+
 
 # dependencies
 /node_modules

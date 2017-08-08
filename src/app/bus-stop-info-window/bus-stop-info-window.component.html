@@ -83,19 +83,22 @@
                                     </li>
                                     -->
                                     <li>
+
                                     <span class="bus-time">
                                         <strong>{{timeLeft(tripForStop)}}</strong>
                                     </span>
                                         <span class="status_box"
-                                              [style.background-color]="getConfidenceColor(tripForStop.AdjustmentAge)">
+                                                  [style.background-color]="getConfidenceColor(tripForStop.AdjustmentAge)">
                                         {{getConfidenceText(tripForStop.AdjustmentAge)}}
                                     </span>
+
                                     </li>
 
                                     <li>At: <strong>{{tripForStop.EstimatedArrivalTime}}</strong>
                                         <span *ngIf="tripForStop.DistanceToStop > 0">
                                         &nbsp;&nbsp;Dist.: {{toPrecission(tripForStop.DistanceToStop/1000,1)}} km
                                     </span>
+                                        <span class="bus-type-icons">{{bikeStatus(tripForStop.BusType)}}</span>
                                     </li>
                                     <!--
                                     <li>TripStartTime: {{tripForStop.TripStartTime}}</li>
@@ -106,14 +109,27 @@
                                     -->
 
                                     <!--
-                                    <li>DeltaProcessingTime: {{deltaProcessingTime}}</li>
-                                    <li>TripDestination: {{tripForStop.TripDestination}}</li>
-                                    -->
-
+                                    <li>DeltaProcessingTime: {{deltaProcessingTime}}</li>-->
+                                    <li *ngIf="tripForStop.LastTripOfSchedule !== 'false'">
+                                        <strong> Last Trip</strong>
+                                    </li>
+                                    <li>Destination: {{tripForStop.TripDestination}}
+                                        <span class="bus-trip-toggle" (click)="toggler.toggle()">
+                                            {{getToggleText(toggler.on)}}</span>
+                                    </li>
+                                    <li>
+                                        <app-toggle #toggler>
+                                            <ul>
+                                                <li>BusType: {{tripForStop.BusType}}</li>
+                                                <li>Latitude: {{tripForStop.Latitude}}</li>
+                                                <li>Longitude: {{tripForStop.Longitude}}</li>
+                                                <li>GPSSpeed: {{tripForStop.GPSSpeed}}</li>
+                                            </ul>
+                                        </app-toggle>
+                                    </li>
                                     <!--
                                     <li>RequestProcessingTime: {{tripForStop.RequestProcessingTime}}</li>
                                     <li>BusIndex: {{tripForStop.BusIndex}}</li>
-                                    <li>LastTripOfSchedule: {{tripForStop.LastTripOfSchedule}}</li>
                                     <li>BusType: {{tripForStop.BusType}}</li>
                                     <li>Latitude: {{tripForStop.Latitude}}</li>
                                     <li>Longitude: {{tripForStop.Longitude}}</li>

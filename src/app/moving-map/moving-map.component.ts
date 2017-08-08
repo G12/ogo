@@ -8,6 +8,8 @@ import {OgoConstants} from '../ogo-constants';
 
 import {} from '@types/googlemaps';
 
+import {TransitService} from "../transit.service";
+
 @Component({
   selector: 'app-moving-map',
   template: ''
@@ -43,7 +45,8 @@ export class MovingMapComponent implements OnInit {
   tilesloaded: google.maps.MapsEventListener;
 
   constructor(private mapApiWrapper: GoogleMapsAPIWrapper,
-              private geolocationService: GeolocationService) {
+              private geolocationService: GeolocationService,
+              private transitService: TransitService) {
 
   }
 
@@ -139,7 +142,7 @@ export class MovingMapComponent implements OnInit {
           this.addCustomControls();
 
         }
-      })
+      });
     });
   }
 
@@ -256,6 +259,15 @@ export class MovingMapComponent implements OnInit {
             console.log('Pan to: ' + this.lattitude + ' ' + this.longitude);
             this.map.panTo({lat: this.lattitude, lng: this.longitude});
           }
+          /*
+          // Test service for geolocation posting
+          this.transitService.storeTestLocation(position.coords.latitude,
+            position.coords.longitude,
+            position.coords.accuracy,
+            position.timestamp).then(status => {
+              console.log('status: ' + status);
+          });
+          */
 
         }, err => {
           console.log(err);

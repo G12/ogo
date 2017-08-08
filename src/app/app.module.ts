@@ -26,9 +26,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { BusRoutesComponent } from './bus-routes/bus-routes.component';
 import { ConfirmDlgComponent } from './confirm-dlg/confirm-dlg.component';
+import { ToggleComponent } from './toggle/toggle.component';
 
 @NgModule({
   declarations: [
+    ToggleComponent,
     AppComponent,
     OgoComponent,
     GoogleMapComponent,

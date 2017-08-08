@@ -14,6 +14,26 @@
     color: darkgrey;
 }
 
+.bus-type-icons{
+    margin-top: 0px;
+    padding: 1px;
+    text-align: left;
+    display: inline-block;
+    width: 2rem;
+    font-size: 0.8rem;
+    float: right;
+}
+
+.bus-trip-toggle{
+    margin-top: 0px;
+    padding: 1px;
+    text-align: center;
+    display: inline-block;
+    font-size: 0.8rem;
+    cursor: pointer;
+    float: right;
+}
+
 .status_box{
     border: 1px solid black;
     margin-top: 0px;
