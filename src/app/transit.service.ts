@@ -126,6 +126,10 @@ export class TransitService {
       .catch(this.handleError);
   }
 
+  // https://geopad.ca/js/get_json_triplist.php?trips_x=AE540b86_124&city_code=oc&count=3
+  // getTripList(stop_id: string, bus_num: number, head_sign_id: number, city_code: string) {
+
+
   // https://geopad.ca/js/get_json_triplist.php?trips_x=AE540b86_42&city_code=oc&count=3
   // TripList
   // trips string = stop_id + "b" + route_number + "_" + headsign_id  + "b" + route_number + "_" + headsign_id ...;

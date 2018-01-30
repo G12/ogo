@@ -62,7 +62,6 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewC
 
   windowWidth: number;
 
-
   autoScrollDone = false;
 
   constructor(private transitService: TransitService,
@@ -79,7 +78,6 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewC
     this.stop.width = this.elementView.nativeElement.offsetWidth;
 
   }
-
 
   ngOnDestroy(): void {
     if (this.timerService.unsubscribe(this.timerId)) {
@@ -99,7 +97,7 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewC
 
         this.routes = routes;
         this.routes.forEach(route => {
-          route.trip_headsign = route.trip_headsign.replace('_', ' ');
+          route.trip_headsign = this.makeHeadsignText(route.trip_headsign);
         });
 
         // TODO move this out to Grand Central Dispatch
@@ -194,9 +192,9 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewC
     });
 
     // TODO List of stops onroute to make PolyLine with stop markers and moving bus functions
-    // this.transitService.getTripList(this.tripStringGeneric(), "oc", 3 ).then(data =>{
-    //  console.log("getTripList: " + JSON.stringify(data));
-    // })
+    this.transitService.getTripList(this.tripStringGeneric(), 'oc', 3 ).then(data => {
+      console.log('getTripList: ' + JSON.stringify(data));
+     });
 
     // TODO latest service needs to be implemented
     // this.transitService.getNextTripsForStop(this.stop.stop_code ,this.selected_routes[0].route_number).then(data => {
@@ -211,7 +209,11 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewC
 
   selectBus(i) {
     this.routes[i].selected = !this.routes[i].selected;
-    // alert("You selected Bus: " + this.routes[i].trip_headsign );
+  }
+
+  openBusInfoFor(i) {
+    this.routes[i].selected = !this.routes[i].selected;
+    this.monitorBuses(false);
   }
 
   getStyle(i) {
@@ -564,6 +566,34 @@ export class BusStopInfoWindowComponent implements OnInit, OnDestroy, AfterViewC
       return '';
     }
   }
+
+  makeHeadsignText(trip_headsign: string) {
+    const arr = trip_headsign.split('_');
+    let name: string = arr[1];
+    if (name.length > 20) {
+      name = name.substr(0, 16) + '..';
+    }
+    return name;
+  }
+
+  remove(route, busArrival_routes) {
+    let index = busArrival_routes.indexOf(route);
+    let route_num: string;
+    if (index !== -1) {
+      route_num = busArrival_routes[index].route_no;
+    }
+    busArrival_routes.splice(index, 1);
+    this.routes.forEach(item => {
+      if (item.route_number === route_num) {
+        item.selected = false;
+      }
+    });
+    index = this.selected_routes.findIndex(item => {
+      return item.route_number === route_num;
+    });
+    this.selected_routes.splice(index, 1);
+  }
+
 }
 
 

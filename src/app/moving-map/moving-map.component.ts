@@ -8,7 +8,7 @@ import {OgoConstants} from '../ogo-constants';
 
 import {} from '@types/googlemaps';
 
-import {TransitService} from "../transit.service";
+import {TransitService} from '../transit.service';
 
 @Component({
   selector: 'app-moving-map',
@@ -17,7 +17,6 @@ import {TransitService} from "../transit.service";
 
 export class MovingMapComponent implements OnInit {
 
-  // map: any;
   map: any;
   circle: any;
 
@@ -271,6 +270,7 @@ export class MovingMapComponent implements OnInit {
 
         }, err => {
           console.log(err);
+          this.clearWatch();
         },
         () => {
           console.log('DONE WATCHING ??');
@@ -278,10 +278,7 @@ export class MovingMapComponent implements OnInit {
       );
       this.watching = true;
     } else {
-      this.watch_subscription.unsubscribe();
-      this.watching = false;
-      this.geolocationService.clearWatch();
-      console.log('DONE WATCHING');
+      this.clearWatch();
     }
     if (this.watching) {
       this.trackingButton.style.backgroundColor = 'chartreuse';
@@ -289,6 +286,12 @@ export class MovingMapComponent implements OnInit {
       this.trackingButton.style.backgroundColor = 'whitesmoke';
     }
     return this.watching;
+  }
+  private clearWatch() {
+    this.watch_subscription.unsubscribe();
+    this.watching = false;
+    this.geolocationService.clearWatch();
+    console.log('DONE WATCHING');
   }
 
   /////////////////////////////////   Controls   //////////////////////////////

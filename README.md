@@ -36,3 +36,8 @@ On new install cd to cordova folder
     4) Run `cordova plugin add cordova-plugin-geolocation`
     5) Run `cordova platform add android`
     6) Run `cordova run android`
+    
+## Research
+
+Drawing bus routes - see assets/triplist.json
+output from url https://geopad.ca/js/get_json_triplist.php?trips_x=AE540b86_124&city_code=oc&count=3

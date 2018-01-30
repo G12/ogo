@@ -128,9 +128,9 @@
     clear: left;
 }
 
-.container ul li {
-    margin: 0 0 1rem 0;
+.bus_number_box {
     width: calc(25% - 0.75rem);
+    /*height: 2rem;*/
     float: left;
     margin: 0 1rem 1rem 0;
 
@@ -142,9 +142,19 @@
     cursor: pointer;
 }
 
-.container ul li:nth-child(4n) {
+.bus_number_box:nth-child(4n) {
     margin: 0 0 1rem 0;
 }
+
+.tiny_text{
+
+    font-size: 0.4rem;
+    font-weight: normal;
+    height: 1rem;
+    margin: 0 0.04rem 0.04rem 0.2rem;
+
+}
+
 
 /* Bus Arrivals */
 
@@ -158,6 +168,8 @@
 
 .trip_card{
 
+    position: relative;
+
     margin: 0px 4px 18px 4px;
     border: 1px solid black;
     padding: 10px;
@@ -166,6 +178,20 @@
     -webkit-box-shadow: 0px 2px 4px 0px rgba(50, 50, 50, 0.31);
     -moz-box-shadow:    0px 2px 4px 0px rgba(50, 50, 50, 0.31);
     box-shadow:         0px 2px 4px 0px rgba(50, 50, 50, 0.31);
+
+}
+
+.close_button{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 0 0.5rem 0.5rem 0.5rem;
+    font-family: "Helvetica Neue", Helvetica;
+    font-size: 1rem;
+    font-weight: bolder;
+    font-stretch: ultra-expanded;
+    color: gray;
+    cursor: pointer;
 
 }
 
@@ -185,7 +211,6 @@
 .bus-time{
     font-size: 0.75rem;
 }
-
 
 /* -- First Break-Point at 600px - TABLET VIEWPORT-- */
 @media screen and (min-width: 600px) and (max-width: 800px) {
@@ -216,7 +241,7 @@
         width: 320px;
     }
 
-    .container ul li {
+    .bus_number_box {
         margin: 0 0 1rem 0;
         width: calc(25% - 0.75rem);
         float: left;
@@ -228,6 +253,12 @@
         border: 1px solid lightgrey;
 
         cursor: pointer;
+    }
+
+    .tiny_text{
+        font-size: 0.7rem;
+        height: 1.7rem;
+        margin: 0 0.1rem 0.1rem 0.3rem;
     }
 
     .bus-time{
@@ -264,7 +295,7 @@
         width: 320px;
     }
 
-    .container ul li {
+    .bus_number_box {
         margin: 0 0 1rem 0;
         width: calc(25% - 0.75rem);
         float: left;
@@ -278,6 +309,11 @@
         cursor: pointer;
     }
 
+    .tiny_text{
+        font-size: 0.7rem;
+        height: 1.7rem;
+        margin: 0 0.1rem 0.1rem 0.3rem;
+    }
 
     .bus-time{
         font-size: 1.5rem;

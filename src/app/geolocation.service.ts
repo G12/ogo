@@ -5,7 +5,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Position} from './geolocation-api';
 
 const GEOLOCATION_ERRORS = {

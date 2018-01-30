@@ -18,15 +18,21 @@
                 <p>Stop number: {{stop.stop_code}}</p>
             </div>
 
+            <!--   (click)="selectBus(i)" -->
 
             <!-- Stop Number Grid -->
             <div class="container">
                 <ul>
                     <li *ngFor="let route of routes ; let i = index"
+                        (dblclick)="openBusInfoFor(i)"
                         (click)="selectBus(i)"
+                        class="bus_number_box"
                         [style.background-color]="getStyle(i)"
                         title="Click to select or deselect this bus.">
-                        {{route.route_number}}
+                        <ul>
+                            <li>{{route.route_number}}</li>
+                            <li class="tiny_text">{{route.trip_headsign}}</li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -63,6 +69,8 @@
                 <h2 *ngIf="busy">Getting Bus Data ...</h2>
                 <div *ngIf="!busy">
                     <div class="trip_card" *ngFor="let route of busArrival.routes">
+                        <div class="close_button" *ngIf="busArrival.routes.length > 1"
+                             (click)="remove(route, busArrival.routes)">x</div>
                         <!--<h3>Route: {{route.route_no}}</h3>-->
                         <h3 *ngIf="route.trips.length == 0">{{route.route_no}} No trip data available.</h3>
                         <div *ngFor="let trip of route.trips">
