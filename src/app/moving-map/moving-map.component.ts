@@ -23,7 +23,7 @@ export class MovingMapComponent implements OnInit {
   geolocation_position: Position;
   watch_subscription: Subscription;
   watching = false;
-  moving_map = true;
+  toggle_state = 0;
 
   trackingButton: any;
 
@@ -88,15 +88,10 @@ export class MovingMapComponent implements OnInit {
         // string	The URL of the image or sprite sheet.
       };
       const shape = {
-        coord: [0, 0, 0, 40, 40, 40, 40, 0],
+        // coord: [0, 0, 0, 40, 40, 40, 40, 0],
+        coord: [0, 0, 0, 0, 0, 0, 0, 0],
         type: 'poly'
       };
-
-      const infoContent = '<h4>' + this.title + '</h4>' +
-        '<ul><li>Lattitude:'+ this.toDMS(this.lattitude) + '</li>' +
-        '<li>Longitude:'+ this.toDMS(this.longitude) + '</li></ul>';
-
-      this.infoWindow = new google.maps.InfoWindow({content: infoContent});
 
       this.marker_options = {
         position: {lat: this.lattitude, lng: this.longitude},
@@ -105,30 +100,16 @@ export class MovingMapComponent implements OnInit {
         map: this.map,
         title: this.title,
         draggable: false,
-        // infoWindow:this.infoWindow,
+        clickable: false,
         zIndex: 2
         // Infront of Error Elipse
       }
 
       this.marker = new google.maps.Marker(this.marker_options);
 
-      google.maps.event.addListener(this.marker, 'click', () => {
-        // Do nothing if bus clicked - ErrorElipse below for handling visible circle
-        this.infoWindow.open(this.map, this.marker);
-        const infoContent2 = '<h3>' + this.title + '</h3>' +
-          '<ul><li><h4>Lattitude:' + this.toDMS(this.lattitude) + '</h4></li>' +
-          '<li><h4>Longitude:' + this.toDMS(this.longitude) + '</h4></li>' +
-          '<li><h4>Accuracy: ' + this.accuracy + ' meters</h4></li></ul>';
-        this.infoWindow.setContent(infoContent2);
-      });
-
       this.map.addListener('zoom_changed', () => {
-
         this.setCircleAttributes(this.accuracy);
-
-
       });
-
 
       this.tilesloaded = google.maps.event.addListener(this.map, 'tilesloaded', () => {
         console.log('Tiles Loaded');
@@ -137,9 +118,7 @@ export class MovingMapComponent implements OnInit {
           console.log('READY');
           google.maps.event.removeListener(this.tilesloaded);
           this.mapReady.emit(this.map);
-
           this.addCustomControls();
-
         }
       });
     });
@@ -225,17 +204,9 @@ export class MovingMapComponent implements OnInit {
     return this.title;
   }
 
-  toggleMovingMap(): boolean {
-    this.moving_map = !this.moving_map;
-    const msg: string = this.moving_map ? 'Map is Moving' : 'Map is Static';
-    console.log(msg);
-    return this.moving_map;
-  }
-
-  toggleTracking(): boolean {
-
-    if (!this.watching) {
-
+  threeWayToggle() {
+    if (this.toggle_state === 0) {
+      // Start Up watchPosition
       const source = this.geolocationService.watchPosition({
         enableHighAccuracy: true,
         maximumAge: 30000,
@@ -254,20 +225,10 @@ export class MovingMapComponent implements OnInit {
           this.circle.strokeColor = 'green';
           this.marker.setPosition({lat: this.lattitude, lng: this.longitude});
 
-          if (this.moving_map) {
+          if (this.toggle_state === 2) {
             console.log('Pan to: ' + this.lattitude + ' ' + this.longitude);
             this.map.panTo({lat: this.lattitude, lng: this.longitude});
           }
-          /*
-          // Test service for geolocation posting
-          this.transitService.storeTestLocation(position.coords.latitude,
-            position.coords.longitude,
-            position.coords.accuracy,
-            position.timestamp).then(status => {
-              console.log('status: ' + status);
-          });
-          */
-
         }, err => {
           console.log(err);
           this.clearWatch();
@@ -276,17 +237,18 @@ export class MovingMapComponent implements OnInit {
           console.log('DONE WATCHING ??');
         }
       );
-      this.watching = true;
-    } else {
-      this.clearWatch();
-    }
-    if (this.watching) {
+      this.toggle_state = 1;
       this.trackingButton.style.backgroundColor = 'chartreuse';
+    } else if (this.toggle_state === 1) {
+      this.toggle_state = 2;
+      this.trackingButton.style.backgroundColor = 'red';
     } else {
+      this.toggle_state = 0;
+      this.clearWatch();
       this.trackingButton.style.backgroundColor = 'whitesmoke';
     }
-    return this.watching;
   }
+
   private clearWatch() {
     this.watch_subscription.unsubscribe();
     this.watching = false;
@@ -322,7 +284,8 @@ export class MovingMapComponent implements OnInit {
 
     // Setup the click event listener
     this.trackingButton.addEventListener('click', () => {
-      this.toggleTracking();
+      // this.toggleTracking();
+      this.threeWayToggle();
     });
     this.map.controls[google.maps.ControlPosition.LEFT_TOP].push(centerControlDiv);
   }

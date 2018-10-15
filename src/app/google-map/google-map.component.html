@@ -1,17 +1,5 @@
 <main>
 
-    <!--
-        <div *ngIf="geolocation_position">
-        <button *ngIf="geolocation_position" (click)="toggleTraking()"
-                [style.background-color]="getTrakColor()">{{trackCaption()}}
-        </button>
-        <button *ngIf="watching" (click)="toggleMovingMap()"
-                [style.background-color]="movingColor()">{{movingCaption()}}
-        </button>
-        <button *ngIf="geolocation_position" (click)="centerMap()">Center</button>
-    </div>
-    -->
-
     <div [style.height]="container_height + 'px'">
         <!-- this creates a google map on the page with the given lat/lng from -->
         <!-- the component as the initial center of the map: -->

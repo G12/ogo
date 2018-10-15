@@ -49,7 +49,8 @@ import { ToggleComponent } from './toggle/toggle.component';
     ReactiveFormsModule,
     HttpModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCTqwynVkRuqfg7OS2KJhDASYJ5Yc-YYtU',
+      // apiKey: 'AIzaSyCTqwynVkRuqfg7OS2KJhDASYJ5Yc-YYtU',
+      apiKey: 'AIzaSyA1InXxmyZWGfqX28lKs_FFlLziBNSGE0s',
       libraries: ['geometry', 'places']
     }),
     BrowserAnimationsModule,

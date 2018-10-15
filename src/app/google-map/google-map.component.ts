@@ -71,7 +71,7 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
   watching = false;
   waiting = false;
 
-  moving_map = true;
+  // moving_map = true;
 
   // TODO breakout into a component
   // stops: Stop[];
@@ -129,7 +129,8 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
 
   toggleTraking() {
     if (this.movingMapComponent) {
-      this.watching = this.movingMapComponent.toggleTracking();
+      // this.watching = this.movingMapComponent.toggleTracking();
+      this.movingMapComponent.threeWayToggle();
     } else {
       alert('Component not available');
     }
@@ -138,10 +139,12 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
   ///////////////////////////////////  Moving Map functions   ////////////////////////
   toggleMovingMap() {
     if (this.movingMapComponent) {
-      this.moving_map = this.movingMapComponent.toggleMovingMap();
+      // this.moving_map = this.movingMapComponent.toggleMovingMap();
+      this.movingMapComponent.threeWayToggle();
     }
   }
 
+  /*
   movingColor() {
     return this.moving_map ? 'red' : 'chartreuse';
   }
@@ -149,6 +152,7 @@ export class GoogleMapComponent implements OnInit, AfterViewInit {
   movingCaption() {
     return this.moving_map ? 'Static' : 'Moving';
   }
+  */
 
   centerMap() {
     if (this.movingMapComponent) {
